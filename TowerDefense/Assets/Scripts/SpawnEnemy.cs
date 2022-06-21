@@ -19,6 +19,7 @@ public class SpawnEnemy : MonoBehaviour
     public class Wave
     {
         public GameObject enemyPrefab;
+        public GameObject enemyPrefab2;
         public float spawnInterval = 2;
         public int maxEnemies = 20;
     }
@@ -43,7 +44,20 @@ public class SpawnEnemy : MonoBehaviour
             (enemiesSpawned < waves[currentWave].maxEnemies))   // if we haven't spawned all the enemies, and the right time has passed between spawns, spawn an enemy!
             {
                 lastSpawnTime = Time.time;
-                GameObject newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab);
+
+                //GameObject newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab);
+                //GameObject newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab2);
+
+                GameObject newEnemy;
+                //if() //Couldn't figure out what if statement to write to mix between the enemy
+                //{
+                    newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab);
+                //}
+                //else {
+                 //   newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab2);
+                //}
+
+
                 newEnemy.GetComponent<MoveEnemy>().waypoints = waypoints;
                 enemiesSpawned++;
             }
