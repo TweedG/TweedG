@@ -1,5 +1,6 @@
 Portfolio
 Sheep Game-
+I have added the title scene, But it isn't the default on open as I was testing everything in the main game.
 Attempted the advanced tasks below. Managed to get them working. I can't remeber what references I used but I kinda just winged it myself and it seemed to work.
 
     Increase the sheep movement speed over time to increase the difficulty.
