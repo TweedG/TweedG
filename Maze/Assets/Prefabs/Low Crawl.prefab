@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 515588837768578224}
   - component: {fileID: 48699764757965760}
   - component: {fileID: -5739419975109328107}
+  - component: {fileID: 6155213156470687951}
   m_Layer: 0
   m_Name: Low Crawl
   m_TagString: Untagged
@@ -348,6 +349,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 1, z: 1.4}
   m_Center: {x: 0.2, y: 0.5, z: 0.2}
+--- !u!114 &6155213156470687951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895211356916686346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e20ccdf8bb18f429def31d2cc32fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &966992680943633755
 GameObject:
   m_ObjectHideFlags: 0

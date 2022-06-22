@@ -17,6 +17,12 @@ public class MazeConstructor : MonoBehaviour
         get; private set;
     }
 
+    public float hallWidth{ get; private set; }
+    public int goalRow{ get; private set; }
+    public int goalCol{ get; private set; }
+
+    public Node[,] graph; // Holds new graph of nodes
+
     void Awake()
     {
         // default to walls surrounding a single empty cell
@@ -28,6 +34,8 @@ public class MazeConstructor : MonoBehaviour
         };
 
         meshGenerator = new MazeMeshGenerator();
+
+        hallWidth = meshGenerator.width;
     }
 
     private void DisplayMaze()
@@ -68,13 +76,27 @@ public class MazeConstructor : MonoBehaviour
         GUI.Label(new Rect(20, 20, 500, 500), msg);
     }
 
-    public void GenerateNewMaze(int sizeRows, int sizeCols)
+    public void GenerateNewMaze(int sizeRows, int sizeCols, TriggerEventHandler treasureCallback)
     {
+        DisposeOldMaze();
+        
         if (sizeRows % 2 == 0 && sizeCols % 2 == 0)
             Debug.LogError("Odd numbers work better for dungeon size.");
 
         data = FromDimensions(sizeRows, sizeCols);
+
+        graph = new Node[sizeRows,sizeCols];
+
+        for (int i = 0; i < sizeRows; i++)        
+            for (int j = 0; j < sizeCols; j++)            
+                graph[i, j] = data[i,j] == 0 ? new Node(i, j, true) : new Node(i, j, false);
+
+        goalRow = data.GetUpperBound(0) - 1;
+        goalCol = data.GetUpperBound(1) - 1;
+        
         DisplayMaze();
+
+        PlaceGoal(treasureCallback);
     }
 
     public int[,] FromDimensions(int sizeRows, int sizeCols)
@@ -98,4 +120,31 @@ public class MazeConstructor : MonoBehaviour
                 }
         return maze;
     }
+
+    public void DisposeOldMaze()
+{
+    GameObject[] objects = GameObject.FindGameObjectsWithTag("Generated");
+    foreach (GameObject go in objects) {
+        Destroy(go);
+    }
+}
+
+private void PlaceGoal(TriggerEventHandler treasureCallback)
+{            
+    GameObject treasure = GameObject.CreatePrimitive(PrimitiveType.Cube);
+//    GameObject monster = monsterPrefab;
+    treasure.transform.position = new Vector3(goalCol * hallWidth, .5f, goalRow * hallWidth);
+    treasure.name = "Treasure";
+    treasure.tag = "Generated";
+
+    treasure.GetComponent<BoxCollider>().isTrigger = true;
+    treasure.GetComponent<MeshRenderer>().sharedMaterial = treasureMat;
+
+    TriggerEventRouter tc = treasure.AddComponent<TriggerEventRouter>();
+    tc.callback = treasureCallback;
+
+//    TriggerEventRouter ec = monster.AddComponent<TriggerEventRouter>();
+//    ec.callback = treasureCallback;
+}
+
 }
